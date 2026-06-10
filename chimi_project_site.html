@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chimi Project - برنامه شیمی</title>
+    <style>
+        @font-face {
+            font-family: TahomaCustom;
+            src: local("Tahoma");
+        }
+
+        :root {
+            --background-color: #1e1e2e;
+            --sidebar-bg: #11111b;
+            --card-bg: #181825;
+            --accent-color: #89b4fa;
+            --text-color: #cdd6f4;
+            --hover-color: #585b70;
+            --border-color: #313244;
+            --button-bg: #45475a;
+            --card-header-color: #fab387;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'TahomaCustom', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-left: 2px solid var(--border-color);
+            padding: 25px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            margin: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* لوگو  */
+        .logo {
+            text-align: center;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo img {
+            width: 70px;
+            height: 70px;
+            filter: drop-shadow(0 0 8px var(--accent-color));
+            animation: pulse 2s infinite ease-in-out;
+
+        }
+
+        .logo h3 {
+            margin-top: 10px;
+            color: var(--accent-color);
+            font-size: 1.4em;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /*  منو  */
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            border-right: 4px solid transparent;
+        }
+
+        .menu a:hover {
+            background-color: var(--border-color);
+            color: var(--accent-color);
+            border-right: 4px solid var(--accent-color);
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(137, 180, 250, 0.2);
+        }
+
+        .menu a i {
+            margin-left: 15px;
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+
+
+        .box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .box h2 {
+            color: var(--card-header-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .box ul li {
+            padding-right: 25px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .box ul li::before {
+            content: '✔';
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.2em;
+        }
+
+        .box ul li:hover {
+            color: var(--accent-color);
+            transform: translateX(-3px);
+            transition: all 0.2s ease;
+        }
+
+        /*  دکمه  */
+        .button {
+            display: inline-block;
+            padding: 12px 22px;
+            background: linear-gradient(-90deg, var(--button-bg), var(--hover-color));
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(69, 71, 90, 0.5);
+        }
+
+        .button:hover {
+            background: linear-gradient(-90deg, var(--hover-color), var(--button-bg));
+            box-shadow: 0 5px 15px rgba(88, 91, 112, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            color: #a6adc8;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--accent-color);
+        }
+
+
+        h2 {
+            font-size: 2.0em;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #cdd6f4;
+            text-align: justify;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-left: none;
+                border-bottom: 2px solid var(--border-color);
+            }
+
+            .content {
+                padding: 25px;
+            }
+
+            .logo img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .logo h3 {
+                font-size: 1.3em;
+            }
+
+            .menu a {
+                font-size: 1em;
+                padding: 10px 12px;
+            }
+
+            .box {
+                padding: 20px;
+            }
+
+            .box h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="sidebar">
+            <div class="logo">
+                <img src="icon2.png" alt="Chimi Project Logo">
+                <h3>Chimi Project</h3>
+            </div>
+
+            <nav class="menu">
+                <a href="#home" class="nav-link">🏠 صفحه اصلی</a>
+                <a href="#guide" class="nav-link">📘 راهنمای برنامه</a>
+                <a href="#learn" class="nav-link">🧪 یادگیری شیمی</a>
+                <a href="#download" class="nav-link">📥 دانلودها </a>
+            </nav>
+        </div>
+
+       
+        <div class="content">
+            
+            <section id="home" class="box">
+                <h2>👤 درباره سازنده</h2>
+                <p class="intro-text">
+                    این برنامه شیمی توسط <strong>کیانوش فدائی</strong> توسعه داده شده است.
+                    هدف این پروژه: ساده‌سازی مفاهیم شیمی و بررسی داده‌های شیمیایی برای دانش اموزان و علاقه‌مندان است.
+                <ul>
+                    <li>
+                        Chimi Project یک نرم‌افزار جامع شیمی است که با استفاده از Python، PyQt5 و Matplotlib ساخته شده.
+                        این برنامه شامل بخش‌های تحلیلی پیشرفته، رسم نمودارهای تعاملی و یک دانشنامه کامل شیمی می‌باشد.
+                    </li>
+                    <li>
+                        جهت ارتباط سازنده و ایده های خود درباره برنامه به ایمیل روبرو پیام دهید
+
+                        example@gmail.com
+                    </li>
+                </ul>
+                <a href="#guide" class="button">شروع راهنما</a>
+            </section>
+
+            <!-- Guide Section -->
+            <section id="guide" class="box">
+                <h2>📘 راهنمای استفاده از برنامه</h2>
+                <li>
+                    این بخش به شما کمک می‌کند تا با بخش‌های مختلف برنامه ازمایشگاه شیمی آشنا شوید.
+                </li>
+                <h3>معرفی تب‌های برنامه:</h3>
+                <ul>
+                    <li><strong>محتویات:</strong> برای مشاهده جزئیات مواد و ترکیبات شیمیایی.</li>
+                    <li><strong>نمودار:</strong> برای مشاهده pH و دمای هر ماده یا ترکیب.</li>
+                    <li><strong>کشف‌ها:</strong> برای ثبت یافته‌های ترکیبات که در بخش دانشنامه توضیحات دقیق هر ترکیب رو
+                        شرح کردیم.</li>
+                    <li><strong>دانشنامه:</strong> مشاهده تمامی مشخصات ترکیب های کشف شده.</li>
+                    <li><strong>لیست مواد:</strong> یک لیست کامل از خواص مواد مختلف.</li>
+                </ul>
+                <a href="#" class="button">دانلود راهنمای کامل</a>
+            </section>
+
+            <!-- Learn Chemistry Section -->
+            <section id="learn" class="box">
+                <h2>🧪 یادگیری مفاهیم پایه شیمی</h2>
+
+                <h3>فصل 1: مواد و زیر شاخه های ان</h3>
+                <ul>
+                    <li>
+                        در این فصل با مفاهیم اولیه و دسته‌بندی‌های مواد آشنا می‌شویم. شیمی، علم مطالعه ماده و خواص آن و
+                        همچنین اتفاقاتی است که ماده در زمان واکنش‌های شیمیایی از سر می‌گذراند. درک این مفاهیم، کلید فهم
+                        بسیاری از اتفاق ‌های طبیعی و مصنوعی اطراف ماست.
+                    </li>
+
+                    <li>
+                        <strong>ماده :</strong> به هر چیزی گفته می‌شود که دارای جرم باشد و فضا را اشغال کند. همه چیزهایی
+                        که می‌بینیم، لمس می‌کنیم و حتی هوا را که تنفس می‌کنیم، ماده هستند. مواد دارای خواص مختلفی هستند
+                        که به ما در شناسایی و تمایز آن‌ها کمک می‌کند. این خواص به دو دسته کلی تقسیم می‌شوند:
+                    </li>
+                </ul>
+                <ul>
+                    <li><strong>خواص فیزیکی:</strong> خواصی که بدون تغییر در ترکیب شیمیایی ماده قابل مشاهده و
+                        اندازه‌گیری هستند، مانند رنگ، بو، حالت (جامد، مایع، گاز)، نقطه ذوب، نقطه جوش، چگالی و سختی </li>
+                    <li><strong>خواص شیمیایی:</strong> خواصی که در طی یک واکنش شیمیایی و با تغییر در ترکیب ماده آشکار
+                        می‌شوند، مانند قابلیت اشتعال، واکنش‌پذیری با اسیدها، خاصیت اکسیدکنندگی یا احیاکنندگی.</li>
+                </ul>
+
+                <h3>فصل 2: دسته‌بندی مواد</h3>
+                <li>
+                    مواد را می‌توان بر اساس خواصشان دسته‌بندی کرد:
+                </li>
+                <ul>
+                    <li><strong>مخلوط‌ها:</strong> ترکیب فیزیکی از دو یا چند ماده که نسبت ثابتی ندارند.</li>
+                    <li><strong>ترکیبات یونی:</strong> تشکیل شده از یون‌های مثبت و منفی.</li>
+                    <li><strong>ترکیبات کووالانسی:</strong> تشکیل شده از اشتراک الکترون بین اتم‌ها.</li>
+                </ul>
+
+                <h3>ادامه آموزش</h3>
+                <li>
+                    این بخش‌ها به‌صورت مرحله‌به‌مرحله و با جزئیات بیشتر توسعه خواهند یافت.
+                </li>
+
+                <section id="download" class="box">
+                    <h2>📥 دانلودها</h2>
+                    <ul>
+                        <li><a href="#">دانلود نسخه ویندوز (exe)</a></li>
+                        <li><a href="#">کد منبع پروژه (GitHub - اختیاری)</a></li>
+                    </ul>
+                </section>
+
+</body>
+
+</html>
