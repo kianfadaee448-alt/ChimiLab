@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Chimi Project | ChimiLab - آزمایشگاه شیمی هوشمند</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <meta name="description" content="ChimiLab یک آزمایشگاه شیمی تعاملی با مدل اتمی بور، دیتابیس مواد، نمودارهای pH و دما، و ابزارهای محاسباتی شیمی است.">
+    <meta name="author" content="Kianoush Fadaee">
+
+    <style>
+        @font-face {
+            font-family: TahomaCustom;
+            src: local("Tahoma");
+        }
+
+        :root {
+            --background-color: #050816;
+            --sidebar-bg: #050816;
+            --card-bg: #0b1020;
+            --accent-color: #7dd3fc;
+            --accent-strong: #38bdf8;
+            --text-color: #e5e7eb;
+            --muted-color: #9ca3af;
+            --hover-color: #1f2937;
+            --border-color: #111827;
+            --button-bg: #0ea5e9;
+            --button-bg-soft: #1f2937;
+            --card-header-color: #f97316;
+            --danger-color: #f97373;
+            --success-color: #4ade80;
+            --warning-color: #facc15;
+            --gradient-hero: radial-gradient(circle at top, #0ea5e9 0, transparent 55%), radial-gradient(circle at bottom, #4f46e5 0, #020617 55%);
+        }
+
+        body.light {
+            --background-color: #f3f4f6;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --accent-color: #2563eb;
+            --accent-strong: #1d4ed8;
+            --text-color: #111827;
+            --muted-color: #6b7280;
+            --hover-color: #e5e7eb;
+            --border-color: #d1d5db;
+            --button-bg: #2563eb;
+            --button-bg-soft: #e5e7eb;
+            --card-header-color: #ea580c;
+            --gradient-hero: radial-gradient(circle at top, #93c5fd 0, transparent 55%), radial-gradient(circle at bottom, #a5b4fc 0, #e5e7eb 55%);
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'TahomaCustom', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .sidebar {
+            width: 290px;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border-color);
+            padding: 24px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .content {
+            flex: 1;
+            padding: 32px 40px 40px;
+            margin: 0;
+            position: relative;
+        }
+
+        /* هدر سایدبار */
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo img {
+            width: 72px;
+            height: 72px;
+            filter: drop-shadow(0 0 10px rgba(56,189,248,0.7));
+            animation: pulse 2.2s infinite ease-in-out;
+        }
+
+        .logo h3 {
+            margin-top: 10px;
+            color: var(--accent-color);
+            font-size: 1.45em;
+            letter-spacing: 0.5px;
+        }
+
+        .logo small {
+            display: block;
+            margin-top: 4px;
+            font-size: 0.82em;
+            color: var(--muted-color);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.06); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* سوییچ تم */
+        .theme-toggle {
+            margin-top: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: var(--muted-color);
+        }
+
+        .theme-toggle button {
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            padding: 5px 14px;
+            background: var(--button-bg-soft);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.82em;
+            transition: all 0.25s ease;
+        }
+
+        .theme-toggle button:hover {
+            transform: translateY(-1px);
+            border-color: var(--accent-color);
+        }
+
+        /* منو */
+        .menu {
+            margin-top: 18px;
+            flex: 1;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            background: transparent;
+            border-radius: 10px;
+            color: var(--muted-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.98em;
+            transition: all 0.25s ease;
+            border-right: 3px solid transparent;
+        }
+
+        .menu a span.icon {
+            margin-left: 12px;
+            font-size: 1.15em;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            background: linear-gradient(90deg, rgba(15,23,42,0.9), transparent);
+            color: var(--accent-color);
+            border-right-color: var(--accent-strong);
+            transform: translateX(-4px);
+        }
+
+        /* فوتر سایدبار */
+        .sidebar-footer {
+            margin-top: 16px;
+            font-size: 0.78em;
+            color: var(--muted-color);
+            text-align: center;
+        }
+
+        .sidebar-footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .sidebar-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* باکس‌ها */
+        .box {
+            background: radial-gradient(circle at top left, rgba(56,189,248,0.08), transparent 55%), var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 24px 22px;
+            margin-bottom: 26px;
+            box-shadow: 0 18px 45px rgba(15,23,42,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(56,189,248,0.18), transparent 60%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .box:hover::before {
+            opacity: 1;
+        }
+
+        .box h2 {
+            color: var(--card-header-color);
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.7em;
+            border-bottom: 1px solid rgba(148,163,184,0.4);
+            padding-bottom: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .box h2 span {
+            font-size: 1.1em;
+        }
+
+        .box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .box ul li {
+            padding-right: 22px;
+            position: relative;
+            margin-bottom: 10px;
+            font-size: 0.96em;
+        }
+
+        .box ul li::before {
+            content: '▹';
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.05em;
+        }
+
+        .box ul li:hover {
+            color: var(--accent-color);
+            transform: translateX(-2px);
+            transition: all 0.18s ease;
+        }
+
+        /* دکمه‌ها */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(90deg, var(--button-bg), var(--accent-strong));
+            border-radius: 999px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.98em;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(56,189,248,0.45);
+            white-space: nowrap;
+        }
+
+        .button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 16px 35px rgba(56,189,248,0.6);
+        }
+
+        .button.secondary {
+            background: var(--button-bg-soft);
+            color: var(--accent-color);
+            box-shadow: none;
+            border: 1px solid rgba(148,163,184,0.6);
+        }
+
+        .button.secondary:hover {
+            border-color: var(--accent-strong);
+        }
+
+        .intro-text {
+            font-size: 1.05em;
+            color: var(--muted-color);
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent-color);
+        }
+
+        h3 {
+            font-size: 1.25em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text-color);
+            text-align: justify;
+            font-size: 0.96em;
+        }
+
+        /* سکشن هیرو */
+        .hero {
+            background: var(--gradient-hero);
+            border-radius: 22px;
+            padding: 26px 24px 24px;
+            margin-bottom: 26px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1.1fr;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 2.1em;
+            margin: 0 0 10px;
+            color: #f9fafb;
+        }
+
+        .hero-sub {
+            font-size: 0.98em;
+            color: #e5e7eb;
+            max-width: 520px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0 16px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background-color: rgba(15,23,42,0.7);
+            color: #e5e7eb;
+            font-size: 0.8em;
+        }
+
+        .badge span.dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background-color: var(--success-color);
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 14px;
+            font-size: 0.82em;
+            color: #e5e7eb;
+        }
+
+        .hero-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-meta span strong {
+            color: #facc15;
+        }
+
+        .hero-visual {
+            position: relative;
+            min-height: 210px;
+            border-radius: 18px;
+            background: radial-gradient(circle at top, rgba(56,189,248,0.35), transparent 60%), #020617;
+            border: 1px solid rgba(148,163,184,0.4);
+            overflow: hidden;
+        }
+
+        .hero-orbit {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orbit-circle {
+            position: absolute;
+            border-radius: 999px;
+            border: 1px dashed rgba(148,163,184,0.6);
+            animation: orbit-rotate 18s linear infinite;
+        }
+
+        .orbit-circle:nth-child(1) { width: 120px; height: 120px; animation-duration: 16s; }
+        .orbit-circle:nth-child(2) { width: 170px; height: 170px; animation-duration: 22s; }
+        .orbit-circle:nth-child(3) { width: 220px; height: 220px; animation-duration: 28s; }
+
+        @keyframes orbit-rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-nucleus {
+            width: 70px;
+            height: 70px;
+            border-radius: 999px;
+            background: radial-gradient(circle at top, #facc15, #f97316);
+            box-shadow: 0 0 40px rgba(250,204,21,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #020617;
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+
+        .hero-electron {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: #38bdf8;
+            box-shadow: 0 0 12px rgba(56,189,248,0.9);
+        }
+
+        .hero-electron:nth-child(5) { top: 18%; left: 50%; }
+        .hero-electron:nth-child(6) { top: 50%; left: 18%; }
+        .hero-electron:nth-child(7) { top: 78%; left: 50%; }
+        .hero-electron:nth-child(8) { top: 50%; left: 82%; }
+
+        .hero-label {
+            position: absolute;
+            bottom: 10px;
+            right: 12px;
+            font-size: 0.78em;
+            color: #9ca3af;
+        }
+
+        /* گریدها و کارت‌ها */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1.5fr 1.1fr;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(148,163,184,0.6);
+            font-size: 0.8em;
+            color: var(--muted-color);
+        }
+
+        .chip.highlight {
+            border-color: var(--accent-strong);
+            color: var(--accent-strong);
+            background-color: rgba(56,189,248,0.08);
+        }
+
+        .stat-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.82em;
+            color: var(--muted-color);
+        }
+
+        .stat-pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background-color: rgba(15,23,42,0.8);
+            border: 1px solid rgba(148,163,184,0.5);
+        }
+
+        /* جدول ساده */
+        .table-wrapper {
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.86em;
+        }
+
+        th, td {
+            padding: 7px 8px;
+            border-bottom: 1px solid rgba(148,163,184,0.4);
+            text-align: right;
+        }
+
+        th {
+            background-color: rgba(15,23,42,0.9);
+            color: var(--accent-color);
+        }
+
+        tr:hover td {
+            background-color: rgba(15,23,42,0.6);
+        }
+
+        /* کارت‌های دانلود */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        .download-card {
+            border-radius: 14px;
+            border: 1px solid rgba(148,163,184,0.5);
+            padding: 12px 12px 14px;
+            background: radial-gradient(circle at top, rgba(56,189,248,0.12), transparent 60%), #020617;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .download-card h4 {
+            margin: 0;
+            font-size: 1.02em;
+            color: var(--accent-color);
+        }
+
+        .download-card p {
+            margin: 0;
+            font-size: 0.84em;
+            color: var(--muted-color);
+        }
+
+        .download-card .meta {
+            font-size: 0.8em;
+            color: var(--muted-color);
+        }
+
+        .download-card a {
+            margin-top: 8px;
+            align-self: flex-start;
+        }
+
+        /* فرم تماس */
+        .contact-form {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .contact-form .full {
+            grid-column: 1 / -1;
+        }
+
+        .contact-form label {
+            font-size: 0.82em;
+            color: var(--muted-color);
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            border-radius: 9px;
+            border: 1px solid rgba(148,163,184,0.7);
+            padding: 7px 9px;
+            background-color: rgba(15,23,42,0.9);
+            color: var(--text-color);
+            font-size: 0.9em;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        body.light .contact-form input,
+        body. Light .contact-form textarea {
+            background-color: #ffffff;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-strong);
+            box-shadow: 0 0 0 1px rgba(56,189,248,0.5);
+        }
+
+        .contact-form textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .form-note {
+            font-size: 0.78em;
+            color: var(--muted-color);
+            margin-top: 5px;
+        }
+
+        /* نوار پیشرفت */
+        .progress-wrapper {
+            margin-top: 12px;
+        }
+
+        .progress-label {
+            font-size: 0.82em;
+            color: var(--muted-color);
+            margin-bottom: 4px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 7px;
+            border-radius: 999px;
+            background-color: rgba(15,23,42,0.9);
+            overflow: hidden;
+            border: 1px solid rgba(148,163,184,0.6);
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            width: 40%;
+            background: linear-gradient(90deg, var(--accent-strong), var(--success-color));
+            transition: width 0.4s ease;
+        }
+
+        /* FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .faq-item {
+            border-radius: 12px;
+            border: 1px solid rgba(148,163,184,0.5);
+            padding: 10px 11px;
+            background-color: rgba(15,23,42,0.9);
+        }
+
+        .faq-item h4 {
+            margin: 0 0 6px;
+            font-size: 0.96em;
+            color: var(--accent-color);
+        }
+
+        .faq-item p {
+            margin: 0;
+            font-size: 0.84em;
+            color: var(--muted-color);
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 1100px) {
+            .hero-grid,
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-left: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .content {
+                padding: 22px 18px 28px;
+            }
+
+            .hero {
+                padding: 20px 16px 18px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 1.7em;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .menu a {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- سایدبار -->
+    <aside class="sidebar">
+        <div class="logo">
+            <img src="icon2.png" alt="Chimi Project Logo">
+            <h3>Chimi Project / ChimiLab</h3>
+            <small>آزمایشگاه شیمی تعاملی با مدل اتمی بور و دیتابیس هوشمند مواد</small>
+
+            <div class="theme-toggle">
+                <span>حالت نمایش:</span>
+                <button id="themeBtn">تاریک</button>
+            </div>
+        </div>
+
+        <nav class="menu">
+            <a href="#hero" class="nav-link active">
+                <span class="icon">🚀</span>
+                <span>صفحه اصلی</span>
+            </a>
+            <a href="#home" class="nav-link">
+                <span class="icon">👤</span>
+                <span>درباره پروژه</span>
+            </a>
+            <a href="#guide" class="nav-link">
+                <span class="icon">📘</span>
+                <span>راهنمای برنامه</span>
+            </a>
+            <a href="#learn" class="nav-link">
+                <span class="icon">🧪</span>
+                <span>آموزش شیمی</span>
+            </a>
+            <a href="#download" class="nav-link">
+                <span class="icon">📥</span>
+                <span>دانلودها</span>
+            </a>
+            <a href="#faq" class="nav-link">
+                <span class="icon">❓</span>
+                <span>سوالات متداول</span>
+            </a>
+            <a href="#contact" class="nav-link">
+                <span class="icon">✉️</span>
+                <span>ارتباط با سازنده</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            نسخه فعلی: <strong>1.0.0</strong><br>
+            حجم تقریبی برنامه: <strong>۱۲۰ مگابایت</strong><br>
+            <a href="https://github.com/kianfadaee448-alt/ChimiLab" target="_blank">مخزن GitHub پروژه</a>
+        </div>
+    </aside>
+
+    <!-- محتوای اصلی -->
+    <main class="content">
+
+        <!-- هیرو -->
+        <section id="hero" class="hero">
+            <div class="hero-grid">
+                <div>
+                    <h1 class="hero-title">آزمایشگاه شیمی که شبیه هیچ‌کدام نیست</h1>
+                    <p class="hero-sub">
+                        ChimiLab فقط یک برنامه شیمی نیست؛ ترکیبی از <strong>مدل اتمی بور</strong>، دیتابیس مواد،
+                        نمودارهای تعاملی، و ابزارهای محاسباتی است که حس یک تیم حرفه‌ای توسعه را در یک پروژه شخصی به شما می‌دهد.
+                    </p>
+
+                    <div class="hero-badges">
+                        <span class="badge"><span class="dot"></span> مدل بور تا عنصر ۱۱۸</span>
+                        <span class="badge">OpenGL 3D (در صورت نصب)</span>
+                        <span class="badge">دیتابیس مواد + واکنش‌های سفارشی</span>
+                        <span class="badge">محاسبات فرمول و جرم مولی</span>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="#download" class="button">
+                            دانلود نسخه ویندوز (exe) ⬇️
+                        </a>
+                        <a href="https://github.com/kianfadaee448-alt/ChimiLab" target="_blank" class="button secondary">
+                            مشاهده سورس در GitHub
+                        </a>
+                    </div>
+
+                    <div class="hero-meta">
+                        <span>💾 <strong>۱۲۰ مگابایت</strong> | بدون نیاز به نصب Python</span>
+                        <span>🧠 توسعه توسط <strong>کیانوش فدائی</strong></span>
+                        <span>🧮 Python + PyQt5 + Matplotlib + (OpenGL اختیاری)</span>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="hero-orbit">
+                        <div class="orbit-circle"></div>
+                        <div class="orbit-circle"></div>
+                        <div class="orbit-circle"></div>
+                        <div class="hero-nucleus">Fe</div>
+                        <div class="hero-electron"></div>
+                        <div class="hero-electron"></div>
+                        <div class="hero-electron"></div>
+                        <div class="hero-electron"></div>
+                    </div>
+                    <div class="hero-label">
+                        مدل بور + پوسته‌های K تا Q • نمایش پویا الکترون‌ها
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- درباره پروژه -->
+        <section id="home" class="box">
+            <h2><span>👤</span> درباره سازنده و هسته ChimiLab</h2>
+
+            <div class="two-column">
+                <div>
+                    <p class="intro-text">
+                        این برنامه شیمی توسط <strong>کیانوش فدائی</strong> توسعه داده شده است.
+                        هدف پروژه، ساخت یک <strong>آزمایشگاه شیمی هوشمند</strong> است که هم برای دانش‌آموزان و هم برای علاقه‌مندان جدی شیمی جذاب باشد؛
+                        چیزی در حد کار یک تیم، اما با امضای یک نفر.
+                    </p>
+
+                    <ul>
+                        <li>
+                            ChimiLab با استفاده از <strong>Python، PyQt5، Matplotlib و در صورت وجود، OpenGL</strong> ساخته شده است.
+                            برنامه شامل مدل اتمی بور، دیتابیس مواد، واکنش‌های سفارشی، نمودارهای pH و دما، و ابزارهای محاسباتی شیمی است.
+                        </li>
+                        <li>
+                            دیتابیس عناصر تا <strong>اوگانسون (Z=118)</strong> تکمیل شده و برای هر عنصر، نام، نماد، دسته، حالت و نوترون‌ها ذخیره شده است.
+                        </li>
+                        <li>
+                            دیتابیس مواد (CHEMILAB_DB) و واکنش‌ها (CUSTOM_REACTIONS) از فایل SQLite خوانده می‌شود؛
+                            در صورت نبود دیتابیس، داده‌های پیش‌فرض هوشمند بارگذاری می‌شوند.
+                        </li>
+                    </ul>
+
+                    <div class="chip-list">
+                        <span class="chip highlight">مدل بور پویا</span>
+                        <span class="chip">محاسبه فرمول تجربی</span>
+                        <span class="chip">دیتابیس واکنش‌ها</span>
+                        <span class="chip">نمایش pH و دما</span>
+                        <span class="chip">رابط کاربری تم تیره/روشن</span>
+                    </div>
+
+                    <div class="progress-wrapper">
+                        <div class="progress-label">پیشرفت فعلی توسعه قابلیت‌ها</div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-inner" id="progressBar"></div>
+                        </div>
+                        <div class="form-note">
+                            فصل‌های آموزشی، واکنش‌های بیشتر و ابزارهای تحلیلی جدید به‌صورت تدریجی به ChimiLab اضافه می‌شوند.
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3>مشخصات فنی مهم</h3>
+                    <ul>
+                        <li>نمایش مدل بور 2D با PyQt5 و 3D با OpenGL (در صورت نصب کتابخانه‌ها).</li>
+                        <li>محاسبه پوسته‌های الکترونی با الگوریتم پر شدن اوربیتال‌ها تا ۷ پوسته (K تا Q).</li>
+                        <li>استفاده از کتابخانه <strong>molmass</strong> برای تحلیل فرمول و ترکیب عنصری.</li>
+                        <li>ذخیره‌سازی داده‌ها در فایل <code>db.db</code> و ذخیره وضعیت آزمایش در <code>lab_save.json</code>.</li>
+                    </ul>
+
+                    <div class="stat-row">
+                        <span class="stat-pill">🧪 عناصر: ۱ تا ۱۱۸</span>
+                        <span class="stat-pill">📊 نمودارهای pH و دما</span>
+                        <span class="stat-pill">🧬 واکنش‌های سفارشی</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- راهنمای برنامه -->
+        <section id="guide" class="box">
+            <h2><span>📘</span> راهنمای استفاده از برنامه</h2>
+
+            <p>
+                این بخش به شما کمک می‌کند تا با تب‌های مختلف ChimiLab آشنا شوید و بدانید هر بخش برای چه کاری طراحی شده است.
+            </p>
+
+            <h3>تب‌های اصلی برنامه</h3>
+            <ul>
+                <li><strong>محتویات:</strong> مشاهده جزئیات مواد و ترکیبات شیمیایی؛ شامل نام، نوع، pH، مولاریته، رنگ و فرمول.</li>
+                <li><strong>نمودار:</strong> نمایش نمودارهای <strong>pH</strong> و <strong>دمای</strong> مواد در شرایط مختلف و مقایسه آن‌ها.</li>
+                <li><strong>کشف‌ها:</strong> ثبت ترکیبات و نتایج جدید؛ هر کشف در دانشنامه با جزئیات ذخیره می‌شود.</li>
+                <li><strong>دانشنامه:</strong> مشاهده مشخصات کامل ترکیبات کشف‌شده، توضیحات، کاربردها و هشدارهای ایمنی.</li>
+                <li><strong>لیست مواد:</strong> لیست کامل مواد موجود در دیتابیس با امکان جستجو و فیلتر.</li>
+            </ul>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>نام تب</th>
+                        <th>کاربرد اصلی</th>
+                        <th>مناسب برای</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>محتویات</td>
+                        <td>نمایش جزئیات مواد و ترکیبات</td>
+                        <td>شروع کار با مواد جدید</td>
+                    </tr>
+                    <tr>
+                        <td>نمودار</td>
+                        <td>تحلیل رفتار pH و دما</td>
+                        <td>تحلیل آزمایش‌ها و گزارش‌ها</td>
+                    </tr>
+                    <tr>
+                        <td>کشف‌ها</td>
+                        <td>ثبت ترکیبات و نتایج جدید</td>
+                        <td>پروژه‌های تحقیقاتی و تمرین‌های خلاقانه</td>
+                    </tr>
+                    <tr>
+                        <td>دانشنامه</td>
+                        <td>مطالعه عمیق درباره ترکیبات</td>
+                        <td>آمادگی برای امتحان و کنکور</td>
+                    </tr>
+                    <tr>
+                        <td>لیست مواد</td>
+                        <td>مرور سریع خواص مواد</td>
+                        <td>مرجع سریع در حین آزمایش</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 14px;">
+                <a href="#download" class="button">
+                    دانلود راهنمای کامل (PDF) ⬇️
+                </a>
+                <span class="form-note">
+                    نسخه PDF شامل تصاویر محیط برنامه، مثال‌های واقعی، و نکات ایمنی کار با مواد است.
+                </span>
+            </div>
+        </section>
+
+        <!-- آموزش شیمی -->
+        <section id="learn" class="box">
+            <h2><span>🧪</span> یادگیری مفاهیم پایه شیمی</h2>
+
+            <h3>فصل ۱: ماده و زیرشاخه‌های آن</h3>
+            <ul>
+                <li>
+                    در این فصل با مفاهیم اولیه و دسته‌بندی‌های مواد آشنا می‌شویم.
+                    شیمی، علم مطالعه ماده و خواص آن و همچنین اتفاقاتی است که ماده در زمان واکنش‌های شیمیایی از سر می‌گذراند.
+                    درک این مفاهیم، کلید فهم بسیاری از اتفاق‌های طبیعی و مصنوعی اطراف ماست.
+                </li>
+                <li>
+                    <strong>ماده:</strong> به هر چیزی گفته می‌شود که دارای جرم باشد و فضا را اشغال کند.
+                    همه چیزهایی که می‌بینیم، لمس می‌کنیم و حتی هوا که تنفس می‌کنیم، ماده هستند.
+                    مواد دارای خواص مختلفی هستند که به ما در شناسایی و تمایز آن‌ها کمک می‌کند.
+                </li>
+            </ul>
+
+            <ul>
+                <li><strong>خواص فیزیکی:</strong> خواصی که بدون تغییر در ترکیب شیمیایی ماده قابل مشاهده و اندازه‌گیری هستند؛
+                    مانند رنگ، بو، حالت (جامد، مایع، گاز)، نقطه ذوب، نقطه جوش، چگالی و سختی.</li>
+                <li><strong>خواص شیمیایی:</strong> خواصی که در طی یک واکنش شیمیایی و با تغییر در ترکیب ماده آشکار می‌شوند؛
+                    مانند قابلیت اشتعال، واکنش‌پذیری با اسیدها، خاصیت اکسیدکنندگی یا احیاکنندگی.</li>
+            </ul>
+
+            <h3>فصل ۲: دسته‌بندی مواد</h3>
+            <p>مواد را می‌توان بر اساس خواصشان دسته‌بندی کرد:</p>
+            <ul>
+                <li><strong>مخلوط‌ها:</strong> ترکیب فیزیکی از دو یا چند ماده که نسبت ثابتی ندارند.</li>
+                <li><strong>ترکیبات یونی:</strong> تشکیل شده از یون‌های مثبت و منفی با پیوندهای الکتروستاتیک قوی.</li>
+                <li><strong>ترکیبات کووالانسی:</strong> تشکیل شده از اشتراک الکترون بین اتم‌ها، معمولاً با ساختارهای مولکولی مشخص.</li>
+            </ul>
+
+            <h3>ادامه آموزش</h3>
+            <p>
+                این بخش‌ها به‌صورت مرحله‌به‌مرحله و با جزئیات بیشتر توسعه خواهند یافت.
+                در نسخه‌های بعدی، فصل‌های مربوط به <strong>استوکیومتری، محلول‌ها، سینتیک شیمیایی و شیمی آلی</strong> اضافه می‌شوند.
+            </p>
+
+            <div class="badge"><span class="dot"></span> در حال توسعه</div>
+            <span class="form-note">
+                اگر پیشنهادی برای فصل‌های بعدی دارید، از طریق فرم تماس در پایین صفحه برای سازنده ارسال کنید.
+            </span>
+        </section>
+
+        <!-- دانلودها -->
+        <section id="download" class="box">
+            <h2><span>📥</span> دانلودها</h2>
+
+            <p>
+                در این بخش می‌توانید نسخه‌های مختلف ChimiLab و فایل‌های مرتبط را دانلود کنید.
+                پیشنهاد می‌شود همیشه آخرین نسخه را نصب کنید تا از امکانات جدید و رفع باگ‌ها بهره‌مند شوید.
+            </p>
+
+            <div class="download-grid">
+                <div class="download-card">
+                    <h4>نسخه ویندوز (exe)</h4>
+                    <p>نصب آسان برای سیستم‌عامل ویندوز، بدون نیاز به نصب Python یا کتابخانه‌های اضافی.</p>
+                    <div class="meta">حجم تقریبی: ۱۲۰ مگابایت • مناسب برای دانش‌آموزان و آزمایشگاه‌های آموزشی</div>
+                    <a href="#" class="button">دانلود مستقیم ⬇️</a>
+                </div>
+
+                <div class="download-card">
+                    <h4>کد منبع پروژه (GitHub)</h4>
+                    <p>مناسب برای توسعه‌دهندگان و علاقه‌مندان به یادگیری Python، PyQt5، Matplotlib و OpenGL.</p>
+                    <div class="meta">مخزن رسمی: <code>ChimiLab</code></div>
+                    <a href="https://github.com/kianfadaee448-alt/ChimiLab" target="_blank" class="button secondary">
+                        مشاهده در GitHub
+                    </a>
+                </div>
+
+                <div class="download-card">
+                    <h4>راهنمای کامل (PDF)</h4>
+                    <p>آموزش گام‌به‌گام استفاده از برنامه، همراه با تصاویر و مثال‌های عملی.</p>
+                    <div class="meta">مناسب برای چاپ و استفاده در کلاس درس</div>
+                    <a href="#" class="button secondary">دانلود راهنما</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="box">
+            <h2><span>❓</span> سوالات متداول</h2>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>آیا برای اجرای ChimiLab نیاز به Python دارم؟</h4>
+                    <p>خیر. نسخه exe برای ویندوز به‌صورت مستقل بسته‌بندی شده و بدون نصب Python اجرا می‌شود.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>آیا مدل 3D بور همیشه فعال است؟</h4>
+                    <p>اگر کتابخانه‌های OpenGL نصب باشند، مدل 3D فعال می‌شود؛ در غیر این صورت، برنامه بدون کرش با مدل 2D کار می‌کند.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>آیا می‌توانم واکنش‌های شیمیایی خودم را اضافه کنم؟</h4>
+                    <p>بله. واکنش‌های سفارشی در دیتابیس <code>custom_reactions</code> ذخیره می‌شوند و در برنامه قابل استفاده‌اند.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>آیا این پروژه قابل توسعه است؟</h4>
+                    <p>کاملاً. سورس در GitHub قرار دارد و می‌توانید آن را Fork کرده و قابلیت‌های جدید اضافه کنید.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ارتباط با سازنده -->
+        <section id="contact" class="box">
+            <h2><span>✉️</span> ارتباط با سازنده</h2>
+
+            <p>
+                اگر ایده، پیشنهاد یا باگی در برنامه پیدا کردید، خوشحال می‌شوم آن را با من در میان بگذارید.
+                بازخورد شما مستقیماً روی نسخه‌های بعدی ChimiLab تأثیر می‌گذارد.
+            </p>
+
+            <ul>
+                <li>
+                    ایمیل مستقیم سازنده:<br>
+                    <strong>kianfadaee448@gmail.com</strong>
+                </li>
+                <li>
+                    مخزن GitHub پروژه:<br>
+                    <strong><a href="https://github.com/kianfadaee448-alt/ChimiLab" target="_blank" style="color: var(--accent-color); text-decoration: none;">github.com/kianfadaee448-alt/ChimiLab</a></strong>
+                </li>
+            </ul>
+
+            <div class="contact-form">
+                <div class="full">
+                    <label for="name">نام و نام خانوادگی</label>
+                    <input id="name" type="text" placeholder="مثلاً: علی رضایی">
+                </div>
+                <div>
+                    <label for="email">ایمیل شما</label>
+                    <input id="email" type="email" placeholder="yourmail@example.com">
+                </div>
+                <div>
+                    <label for="subject">موضوع پیام</label>
+                    <input id="subject" type="text" placeholder="مثلاً: پیشنهاد برای قابلیت جدید">
+                </div>
+                <div class="full">
+                    <label for="message">متن پیام</label>
+                    <textarea id="message" placeholder="ایده‌ها، پیشنهادها یا گزارش باگ را اینجا بنویسید..."></textarea>
+                </div>
+                <div class="full">
+                    <button class="button" type="button" onclick="fakeSend()">
+                        ارسال پیام (نمونه نمایشی)
+                    </button>
+                    <div class="form-note">
+                        این فرم صرفاً نمایشی است؛ برای ارتباط واقعی، از ایمیل
+                        <strong>kianfadaee448@gmail.com</strong> استفاده کنید.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // سوییچ تم تاریک/روشن
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light');
+        const isLight = document.body.classList.contains('light');
+        themeBtn.textContent = isLight ? 'روشن' : 'تاریک';
+    });
+
+    // هایلایت لینک فعال در منو
+    const navLinks = document.querySelectorAll('.nav-link');
+    function setActiveLink() {
+        const fromTop = window.scrollY + 130;
+        navLinks.forEach(link => {
+            const section = document.querySelector(link.getAttribute('href'));
+            if (!section) return;
+            if (section.offsetTop <= fromTop && section.offsetTop + section.offsetHeight > fromTop) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', setActiveLink);
+
+    // فرم نمایشی
+    function fakeSend() {
+        alert('این یک فرم نمایشی است. برای ارسال واقعی، از ایمیل kianfadaee448@gmail.com استفاده کنید.');
+    }
+</script>
+
+</body>
+</html>
