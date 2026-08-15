@@ -1,9 +1,14 @@
 <div align="center">
 
 <!-- Animated Header -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,30:164e63,60:7c3aed,100:c026d3&height=230&section=header&text=ChimiLab&fontSize=58&fontColor=ffffff&fontAlignY=35&desc=Interactive%20Chemistry%20Laboratory%20Simulator&descAlignY=55&descSize=18&animation=twinkling" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,30:164e63,60:7c3aed,100:c026d3&height=250&section=header&text=ChimiLab&fontSize=60&fontColor=ffffff&fontAlignY=32&desc=Interactive%20Chemistry%20Laboratory%20Simulator&descAlignY=53&descSize=18&animation=twinkling" width="100%"/>
 
-### 🧪 شبیه‌ساز کامل آزمایشگاه شیمی | Complete Chemistry Lab Simulator
+<!-- Typing Animation -->
+<a href="https://git.io/typing-svg">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=38BDF8&center=true&vCenter=true&width=700&height=45&lines=Chemistry+Lab+Simulator+%F0%9F%A7%AA;Python+%2B+PySide6+%2B+SQLite;Build+%E2%80%A2+Experiment+%E2%80%A2+Learn;Made+with+%E2%9D%A4%EF%B8%8F+in+Iran" alt="Typing SVG" />
+</a>
+
+<br/>
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![PySide6](https://img.shields.io/badge/GUI-PySide6-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython/)
@@ -58,24 +63,6 @@ The main goal is to let students and chemistry enthusiasts perform virtual exper
 
 ---
 
-## 🛠️ تکنولوژی‌ها / Tech Stack
-
-<div align="center">
-
-<img src="https://skillicons.dev/icons?i=python,qt,sqlite,github&theme=dark" alt="Tech Stack" />
-
-</div>
-
-| بخش | تکنولوژی |
-|------|----------|
-| زبان اصلی | Python |
-| رابط کاربری | PySide6 (Qt) |
-| پایگاه داده | SQLite |
-| محاسبات شیمیایی | ماژول‌های اختصاصی |
-| سیستم ذخیره | فایل + دیتابیس |
-
----
-
 ## 🚀 نحوه اجرا / How to Run
 
 **روش ۱ — فایل اجرایی (ویندوز):**
@@ -120,6 +107,6 @@ python main_file.py
 [![GitHub](https://img.shields.io/badge/GitHub-Profile-0D1117?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kianfadaee448-alt)
 [![Website](https://img.shields.io/badge/chimilab.ir-7C3AED?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chimilab.ir)
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:c026d3,40:7c3aed,70:164e63,100:0f172a&height=120&section=footer" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:c026d3,40:7c3aed,70:164e63,100:0f172a&height=130&section=footer" width="100%"/>
 
 </div>
