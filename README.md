@@ -1,15 +1,17 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,15,20,24&height=200&section=header&text=ChimiLab&fontSize=55&fontAlignY=35&desc=Interactive%20Chemistry%20Laboratory%20Simulator&descAlignY=55&descSize=18" width="100%"/>
+<!-- Animated Header -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,30:164e63,60:7c3aed,100:c026d3&height=230&section=header&text=ChimiLab&fontSize=58&fontColor=ffffff&fontAlignY=35&desc=Interactive%20Chemistry%20Laboratory%20Simulator&descAlignY=55&descSize=18&animation=twinkling" width="100%"/>
 
 ### 🧪 شبیه‌ساز کامل آزمایشگاه شیمی | Complete Chemistry Lab Simulator
 
 [![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![PySide6](https://img.shields.io/badge/GUI-PySide6-41CD52?style=for-the-badge&logo=qt&logoColor=white)](https://doc.qt.io/qtforpython/)
 [![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org)
-[![Website](https://img.shields.io/badge/Website-chimilab.ir-0A66C2?style=for-the-badge&logo=google-chrome&logoColor=white)](https://chimilab.ir)
+[![Website](https://img.shields.io/badge/Website-chimilab.ir-7C3AED?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chimilab.ir)
+[![GitHub](https://img.shields.io/badge/GitHub-kianfadaee448--alt-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kianfadaee448-alt)
 
-**توسعه‌دهنده / Developer:** [Kianoush Fadaee](https://github.com/kianfadaee448-alt)  
+**توسعه‌دهنده:** [Kianoush Fadaee](https://github.com/kianfadaee448-alt)  
 ۱۶ ساله | کلاس نهم | پایتون پیشرفته
 
 </div>
@@ -18,17 +20,25 @@
 
 ## 🇮🇷 معرفی پروژه
 
-**ChimiLab** یک شبیه‌ساز تعاملی و کامل آزمایشگاه شیمی است که با پایتون و رابط گرافیکی PySide6 ساخته شده.  
+**ChimiLab** یک شبیه‌ساز تعاملی و کامل آزمایشگاه شیمی است که با پایتون و رابط گرافیکی **PySide6** ساخته شده.
+
 هدف اصلی این پروژه این است که دانش‌آموزان و علاقه‌مندان به شیمی بتوانند بدون نیاز به تجهیزات واقعی، آزمایش‌های شیمیایی را شبیه‌سازی کنند، واکنش‌ها را ببینند، تیتراسیون انجام دهند و محاسبات شیمیایی را تمرین کنند.
 
-### ویژگی‌های اصلی:
-- شبیه‌سازی واقعی واکنش‌های شیمیایی
-- سیستم تیتراسیون با تشخیص نقطه پایانی
-- محاسبه فرمول تجربی و استوکیومتری
-- دیتابیس مواد شیمیایی و واکنش‌ها
-- رابط کاربری مدرن و تاریک (Dark Theme)
-- پشتیبانی از زبان فارسی
-- ذخیره و بارگذاری آزمایش‌ها
+> 🧪 **Build → Experiment → Learn → Improve**
+
+---
+
+## ✨ ویژگی‌های اصلی
+
+| ویژگی | توضیح |
+|:---:|:---|
+| 🧪 | شبیه‌سازی واقعی واکنش‌های شیمیایی |
+| 🔬 | سیستم تیتراسیون با تشخیص نقطه پایانی |
+| 📊 | محاسبه فرمول تجربی و استوکیومتری |
+| 🗃️ | دیتابیس کامل مواد شیمیایی و واکنش‌ها |
+| 🖥️ | رابط کاربری مدرن و تاریک (Dark Theme) |
+| 🇮🇷 | پشتیبانی کامل از زبان فارسی |
+| 💾 | ذخیره و بارگذاری آزمایش‌ها |
 
 ---
 
@@ -37,18 +47,24 @@
 **ChimiLab** is a complete interactive chemistry laboratory simulator built with Python and PySide6.  
 The main goal is to let students and chemistry enthusiasts perform virtual experiments, observe reactions, run titrations, and practice chemical calculations without real lab equipment.
 
-### Key Features:
+### Key Features
 - Realistic chemical reaction simulation
 - Titration system with endpoint detection
 - Empirical formula & stoichiometry calculations
 - Chemical substances and reactions database
 - Modern dark-themed GUI
-- Persian language support
+- Full Persian language support
 - Save / Load experiments
 
 ---
 
 ## 🛠️ تکنولوژی‌ها / Tech Stack
+
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=python,qt,sqlite,github&theme=dark" alt="Tech Stack" />
+
+</div>
 
 | بخش | تکنولوژی |
 |------|----------|
@@ -56,26 +72,29 @@ The main goal is to let students and chemistry enthusiasts perform virtual exper
 | رابط کاربری | PySide6 (Qt) |
 | پایگاه داده | SQLite |
 | محاسبات شیمیایی | ماژول‌های اختصاصی |
-| سیستم ذخیره | فایل و دیتابیس |
+| سیستم ذخیره | فایل + دیتابیس |
 
 ---
 
 ## 🚀 نحوه اجرا / How to Run
 
-1. فایل اجرایی `chimilab.exe` را اجرا کنید (نسخه ویندوز).
-2. یا اگر سورس را دارید، وابستگی‌ها را نصب کرده و فایل اصلی را اجرا کنید.
-
+**روش ۱ — فایل اجرایی (ویندوز):**
 ```bash
-# در صورت اجرای از سورس
+chimilab.exe را اجرا کنید
+```
+
+**روش ۲ — از سورس:**
+```bash
 pip install PySide6
 python main_file.py
 ```
 
 ---
 
-## 🌐 وب‌سایت
+## 🌐 وب‌سایت رسمی
 
-برای اطلاعات بیشتر و دانلود:  
+برای اطلاعات بیشتر، دانلود و مشاهده:
+
 **[https://chimilab.ir](https://chimilab.ir)**
 
 ---
@@ -96,6 +115,11 @@ python main_file.py
 **اگر پروژه براتون مفید بود، ستاره بدید ⭐**  
 *If you find this project useful, please give it a star!*
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,15,20,24&height=100&section=footer" width="100%"/>
+<br/>
+
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-0D1117?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kianfadaee448-alt)
+[![Website](https://img.shields.io/badge/chimilab.ir-7C3AED?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chimilab.ir)
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:c026d3,40:7c3aed,70:164e63,100:0f172a&height=120&section=footer" width="100%"/>
 
 </div>
