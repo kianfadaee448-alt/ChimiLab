@@ -139,3 +139,4 @@ Students can perform virtual experiments, observe reactions, run titrations, and
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:c026d3,30:7c3aed,60:164e63,100:0f172a&height=140&section=footer&text=Thanks%20for%20visiting!&fontSize=22&fontColor=ffffff&fontAlignY=55&animation=twinkling" width="100%"/>
 
 </div>
+
