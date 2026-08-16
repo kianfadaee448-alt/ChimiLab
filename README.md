@@ -52,97 +52,15 @@
 
 <div align="center">
 
-### 🗂️ نمای کلی فایل‌ها
-
-</div>
-
-<br/>
-
-<table>
-<tr>
-<td align="center" width="25%">
-
-🐍<br/>
-**فایل‌های اصلی**
-<br/><br/>
-<code>chimi45.8.py</code><br/>
-<code>chimi45.7.py</code><br/>
-<code>chimi45.6.py</code><br/>
-<code>chimi*.py</code>
-
-</td>
-<td align="center" width="25%">
-
-🗄️<br/>
-**پایگاه داده**
-<br/><br/>
-<code>db.db</code><br/>
-<code>db_manager.py</code><br/>
-<code>savedb.py</code><br/>
-<code>chemilab_db.py</code>
-
-</td>
-<td align="center" width="25%">
-
-🌐<br/>
-**وب‌سایت پروژه**
-<br/><br/>
-<code>chimi_project_site_v6.html</code><br/>
-<code>chimi_project_site_v5.html</code><br/>
-<code>chimi_project_site_v4...</code>
-
-</td>
-<td align="center" width="25%">
-
-📜<br/>
-**نسخه‌های قدیمی**
-<br/><br/>
-<code>shimi*.py</code><br/>
-<code>35.1.py</code><br/>
-<code>35.2.py</code>
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-<div align="center">
-
-| آیکون | نوع فایل | توضیح | رنگ |
-|:-----:|:--------:|:-----:|:---:|
-| 🐍 | `chimi*.py` | هسته اصلی شبیه‌ساز (آخرین نسخه) | `Python` |
-| 🗄️ | `db.db` | پایگاه داده SQLite مواد و واکنش‌ها | `Database` |
-| 📦 | `db_manager.py` | مدیریت دیتابیس و ذخیره/بارگذاری | `Manager` |
-| 🌐 | `chimi_project_site_*.html` | صفحات وب پروژه (نسخه‌های مختلف) | `Web` |
-| 📝 | `README.md` | مستندات و معرفی پروژه | `Docs` |
-| 🔧 | `chemilab_db.py` | لایه دسترسی به دیتابیس | `Core` |
-
-</div>
-
-<br/>
-
-<div align="center">
-
-```text
-ChimiLab/
-│
-├── 🐍  chimi45.8.py          ← آخرین نسخه اصلی
-├── 🐍  chimi45.7.py
-├── 🐍  chimi45.6.py
-├── 🐍  ... (نسخه‌های قبلی)
-│
-├── 🗄️  db.db                 ← پایگاه داده
-├── 📦  db_manager.py
-├── 📦  savedb.py
-├── 🔧  chemilab_db.py
-│
-├── 🌐  chimi_project_site_v6.html
-├── 🌐  chimi_project_site_v5.html
-├── 🌐  ... (نسخه‌های وب)
-│
-└── 📝  README.md
-```
+| | | | |
+|:---:|:---:|:---:|:---:|
+| **🐍** | **🗄️** | **🎨** | **🌐** |
+| `chimi*.py` | `db.db` | GUI (PySide6) | `chimilab.ir` |
+| فایل‌های اصلی | پایگاه داده | رابط کاربری | وب‌سایت |
+| &nbsp; | &nbsp; | &nbsp; | &nbsp; |
+| **📦** | **📝** | **🔧** | **🚀** |
+| `db_manager.py` | README | تنظیمات | اجرا |
+| مدیریت دیتا | مستندات | Tools | Launch |
 
 </div>
 
